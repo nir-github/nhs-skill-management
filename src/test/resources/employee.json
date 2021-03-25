@@ -1,0 +1,9 @@
+{
+    "firstName": "third",
+    "lastName": "person",
+    "dob": "03031973",
+    "skills": {
+        "Java": "PRACTITIONER",
+        ".NET": "AWARENESS"
+    }
+}

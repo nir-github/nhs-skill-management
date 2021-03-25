@@ -1,0 +1,65 @@
+plugins {
+	id 'org.springframework.boot' version '2.1.6.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'org.asciidoctor.convert' version '1.5.8'
+	id 'java'
+}
+
+group = 'com.practice.aws'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	maven { url "https://s3-us-west-2.amazonaws.com/dynamodb-local/release" }
+	mavenCentral()
+}
+
+ext {
+	set('snippetsDir', file("build/generated-snippets"))
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-web-services'
+	implementation 'org.springframework.boot:spring-boot-starter-validation:2.4.1'
+	
+	
+	implementation 'com.amazonaws:aws-java-sdk-dynamodb:1.11.968'
+
+	implementation 'com.univocity:univocity-parsers:2.7.6'
+	compile 'com.amazonaws:aws-java-sdk-bom:1.11.256'
+	compile 'com.google.code.gson:gson:2.8.0'
+		
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testCompile "com.github.tomakehurst:wiremock-standalone:2.18.0"
+	
+	testImplementation 'junit:junit:4.13-rc-1'
+    testImplementation 'com.amazonaws:DynamoDBLocal:1.12.0'
+    testImplementation 'software.amazon.awssdk:dynamodb:2.3.2'
+    
+    testImplementation 'com.almworks.sqlite4java:sqlite4java-win32-x64:1.0.392'
+	
+	testCompile "org.springframework.restdocs:spring-restdocs-webtestclient"
+	asciidoctor "org.springframework.restdocs:spring-restdocs-asciidoctor"
+}
+
+task copyNativeDeps(type: Copy) {
+    from (configurations.testCompile) {
+        include "*.dylib"
+        include "*.so"
+        include "*.dll"
+    }
+    into 'build/libs'
+}
+
+test {
+    dependsOn copyNativeDeps
+    systemProperty "java.library.path", 'build/libs'
+	systemProperty "sqlite4java.library.path", 'build/native-libs'
+	
+}
+
+asciidoctor {
+	inputs.dir snippetsDir
+	dependsOn test
+}
