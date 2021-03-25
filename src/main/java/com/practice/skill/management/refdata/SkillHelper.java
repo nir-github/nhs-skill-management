@@ -3,20 +3,27 @@ package com.practice.skill.management.refdata;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
+import com.practice.skill.management.dto.EmployeeDTO;
 import com.practice.skill.management.dto.SkillCode;
+import com.practice.skill.management.service.EmployeeService;
 import com.univocity.parsers.common.processor.BeanListProcessor;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
 
 @Component
 public class SkillHelper {
+    
+    private final static Logger LOGGER = LogManager.getLogger(SkillHelper.class);
     
     private List<SkillCode> skillsList = new ArrayList<SkillCode>();
     
@@ -40,27 +47,18 @@ public class SkillHelper {
         for (SkillCode fileRow : rowProcessor.getBeans()) {
             skillsList.add(fileRow);
         }
-        System.out.println(skillsList.size());
+        LOGGER.debug("Updated skill list with {} skills", skillsList.size());
     }
     
-    /*public SkillCode getABIDetailsFromAaCode(String abiTableNumber, String aaCode) {
+    public boolean isSkillPresent(String skillName) {
         
-        Optional<SkillCode> op = abiConvCodeslist.stream().filter(abiConv -> abiConv.getAaTableNumber().equalsIgnoreCase(abiTableNumber) && abiConv.getAaCode().equalsIgnoreCase(aaCode)).findFirst();
-        
-        if (op.isPresent()) {
-            return op.get();
-        }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Abi code for aa table number " + abiTableNumber + " aa Code " + aaCode + " not found");
-        
+        Optional<SkillCode> skill = skillsList.stream().filter(s -> s.getName().equalsIgnoreCase(skillName)).findFirst();
+        return skill.isPresent();
     }
-    
-    public SkillCode getABIDetailsFromSkillCode(String abiTableNumber, String SkillCode) {
+
+    public List<SkillCode> getAllSkills() {
         
-        Optional<SkillCode> ops = abiConvCodeslist.stream().filter(abiConv -> abiConv.getAaTableNumber().equalsIgnoreCase(abiTableNumber) && abiConv.getSkillCode().equals(SkillCode)).findFirst();
-        if (ops.isPresent()) {
-            return ops.get();
-        }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ABI code for aa table number " + abiTableNumber + " abi Code " + SkillCode + " not found");
-    }*/
+        return skillsList;
+    }
     
 }

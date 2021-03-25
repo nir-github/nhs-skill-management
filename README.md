@@ -43,6 +43,15 @@ After successful creation it will return response with employeeID as below,
     "status": "Success"
 }
 ```
+Before creating employee system also validate if skills given in request are present in our system. If any skill does not match with anything in system api will give error as below,
+```json
+{
+    "timestamp": "2021-03-25T15:33:14.292+0000",
+    "message": "Skill not found in skill repository. Please provide right skill set.",
+    "details": "uri=/v1/employee/create/"
+}
+```
+
 
 ### Update Employee Details (POST /v1/employee/update/{employeeID}) - 
 Updates employee record along with skills in dynamoDB for given id and status 'Active. If employee with given ID is not present it will give 404 with message " Employee not found". Request to this API looks like below,
@@ -61,6 +70,14 @@ After successful update it will return response with employeeID as below,
 {
     "employeeID": "NHS1084GJTQ",
     "status": "Success"
+}
+```
+Before updating employee, system also validate if skills given in request are present in our system. If any skill does not match with anything in system api will give error as below,
+```json
+{
+    "timestamp": "2021-03-25T15:33:14.292+0000",
+    "message": "Skill not found in skill repository. Please provide right skill set.",
+    "details": "uri=/v1/employee/update/NHS1084GJTQ"
 }
 ```
 
@@ -115,6 +132,91 @@ After successful retrieval it will return response with employee details as belo
             ".NET": "AWARENESS",
             "AWS": "PRACTITIONER"
         }
+    }
+]
+```
+
+### Get List all the skills loaded in Project (GET /v1/employee/retrieveSkills) - 
+When application first starts we load all skills from csv into memory.This api will fetch all skills present in application. Response to this request looks like below,
+
+After successful retrieval it will return response with employee details as below,
+```json
+[
+    {
+        "name": "Drupal",
+        "category": "Framework"
+    },
+    {
+        "name": "Duckreek",
+        "category": "Framework"
+    },
+    {
+        "name": "Java",
+        "category": "Backend"
+    },
+    {
+        "name": "Informatica",
+        "category": "Analytics"
+    },
+    {
+        "name": "Kafka",
+        "category": "Framework"
+    },
+    {
+        "name": "Mainframe",
+        "category": "Backend"
+    },
+    {
+        "name": "Manual Testing",
+        "category": "Testing"
+    },
+    {
+        "name": "Mulesoft",
+        "category": "Framework"
+    },
+    {
+        "name": "Oracle",
+        "category": "Database"
+    },
+    {
+        "name": "SQL",
+        "category": "Database"
+    },
+    {
+        "name": "PHP",
+        "category": "FE"
+    },
+    {
+        "name": "PLSQL",
+        "category": "Database"
+    },
+    {
+        "name": "Python",
+        "category": "Backend"
+    },
+    {
+        "name": "Quality/Team Management",
+        "category": "Operations"
+    },
+    {
+        "name": "Salesforce",
+        "category": "Framework"
+    },
+    {
+        "name": "Scrum/BA",
+        "category": "Operations"
+    },
+    {
+        "name": "Tibco",
+        "category": "Backend"
+    },
+    {
+        "name": "Vmware",
+        "category": "Framework"
+    },
+    {
+        "name": "Product Owner",
+        "category": "Operations"
     }
 ]
 ```

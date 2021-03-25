@@ -21,6 +21,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.practice.skill.management.dto.EmployeeDTO;
 import com.practice.skill.management.dto.EmployeeResponseDTO;
+import com.practice.skill.management.dto.SkillCode;
 import com.practice.skill.management.service.EmployeeService;
 
 @RestController
@@ -74,6 +75,14 @@ public class EmployeeResource {
     public List<EmployeeDTO> getEmployeeForSkills(@PathVariable @NotNull String skill, @PathVariable @NotNull String level) throws JsonMappingException, JsonProcessingException {
         
         return employeeService.getEmployees(skill, level);
+        
+    }
+    
+    @RequestMapping(value = "/retrieveSkills", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public List<SkillCode> retrieveSkills() {
+        
+        return employeeService.retrieveSkills();
         
     }
 }

@@ -9,16 +9,16 @@ import javax.validation.constraints.NotNull;
 @Valid
 public class EmployeeDTO {
     
-    @NotBlank
+    @NotBlank(message = "firstName is mandatory")
     private final String firstName;
     
-    @NotBlank
+    @NotBlank(message = "lastName is mandatory")
     private final String lastName;
     
-    @NotBlank
+    @NotBlank(message = "dob is mandatory")
     private final String dob;
     
-    @NotNull
+    @NotNull(message = "Skills are mandatory")
     private final Map<String, String> skills;
     
     public EmployeeDTO(String firstName, String lastName, String dob, Map<String, String> skills) {

@@ -27,11 +27,12 @@ dependencies {
 	implementation 'com.amazonaws:aws-java-sdk-dynamodb:1.11.968'
 
 	implementation 'com.univocity:univocity-parsers:2.7.6'
-	compile 'com.amazonaws:aws-java-sdk-bom:1.11.256'
-	compile 'com.google.code.gson:gson:2.8.0'
-		
+	implementation 'com.amazonaws:aws-java-sdk-bom:1.11.256'
+	implementation 'com.google.code.gson:gson:2.8.0'
+	implementation 'org.apache.commons:commons-lang3:3.8.1'
+			
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testCompile "com.github.tomakehurst:wiremock-standalone:2.18.0"
+	testImplementation "com.github.tomakehurst:wiremock-standalone:2.18.0"
 	
 	testImplementation 'junit:junit:4.13-rc-1'
     testImplementation 'com.amazonaws:DynamoDBLocal:1.12.0'
@@ -39,7 +40,7 @@ dependencies {
     
     testImplementation 'com.almworks.sqlite4java:sqlite4java-win32-x64:1.0.392'
 	
-	testCompile "org.springframework.restdocs:spring-restdocs-webtestclient"
+	testImplementation "org.springframework.restdocs:spring-restdocs-webtestclient"
 	asciidoctor "org.springframework.restdocs:spring-restdocs-asciidoctor"
 }
 

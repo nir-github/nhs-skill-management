@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO" packages="com.amazonaws.services.lambda.runtime.log4j2">
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout
+				pattern="%d{HH:mm:ss.SSS} [%t] [%-5level %logger{36} - %msg%n" />
+		</Console>
+	</Appenders>
+	
+	<Loggers>
+		<Logger name="com.practice.skill" level="DEBUG" additivity="false">
+			<AppenderRef ref="Console" />
+		</Logger>
+		
+		<Root level="ERROR">
+			<AppenderRef ref="Console" />
+		</Root>
+	</Loggers>
+</Configuration>
