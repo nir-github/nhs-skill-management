@@ -3,6 +3,9 @@ REST API for employee skill management
 
 This project contains Rest API to create, update, delete and retrieve employee and their skills from backedn.
 
+## High Level Design
+[![skill-management-hld.png](https://i.postimg.cc/tT1499yS/skill-management-hld.png)](https://postimg.cc/62XX0J8n)
+
 ## Build and Run
 
 After checkout to build the project use
