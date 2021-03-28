@@ -63,10 +63,10 @@ public class EmployeeResource {
     }
     
     @RequestMapping(value = "/remove/{id}", method = RequestMethod.DELETE)
-    @ResponseStatus(HttpStatus.OK)
-    public EmployeeResponseDTO remove(@PathVariable @NotNull String id) throws JsonMappingException, JsonProcessingException {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void remove(@PathVariable @NotNull String id) throws JsonMappingException, JsonProcessingException {
         
-        return employeeService.deleteEmployee(id);
+        employeeService.deleteEmployee(id);
         
     }
     
