@@ -121,7 +121,7 @@ public class EmployeeService {
         }
     }
     
-    public EmployeeResponseDTO deleteEmployee(@NotNull String id) {
+    public void deleteEmployee(@NotNull String id) {
         
         Optional<EmployeeVO> employee = employeeRepository.getEmployee(id);
         if (employee.isPresent() && employee.get().getStatus().equalsIgnoreCase("Active")) {
@@ -135,8 +135,6 @@ public class EmployeeService {
             LOGGER.debug("Employee with id {} not found", id);
             throw new EmployeeNotFoundException("Employee with Id " + id + " not found");
         }
-        
-        return new EmployeeResponseDTO(id, "Delete successful");
     }
     
     public List<EmployeeDTO> getEmployees(@NotNull String skill, @NotNull String level) {
@@ -145,11 +143,6 @@ public class EmployeeService {
         
         if (!employees.isEmpty()) {
             LOGGER.debug("Found employees for given skills {} {}", skill, level);
-            for (EmployeeDTO employeeDTO : employees) {
-                if(StringUtils.isNotBlank(employeeDTO.getSkills().get(skill)) && employeeDTO.getSkills().get(skill).equalsIgnoreCase(level)) {
-                    System.out.println("match");
-                }
-            }
             return employees.stream().filter(emp -> StringUtils.isNotBlank(emp.getSkills().get(skill)) && emp.getSkills().get(skill).equalsIgnoreCase(level)).collect(Collectors.toList());
         } else {
             LOGGER.debug("No employees were found for skill {} and level {}", skill, level);

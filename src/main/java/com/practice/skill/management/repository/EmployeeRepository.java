@@ -25,7 +25,6 @@ import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.model.AttributeDefinition;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
 import com.amazonaws.services.dynamodbv2.model.KeySchemaElement;
 import com.amazonaws.services.dynamodbv2.model.KeyType;
@@ -33,7 +32,6 @@ import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import com.amazonaws.services.dynamodbv2.model.ScanRequest;
 import com.amazonaws.services.dynamodbv2.model.ScanResult;
 import com.amazonaws.services.dynamodbv2.model.TableDescription;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.practice.skill.management.Constants;
 import com.practice.skill.management.dto.EmployeeDTO;
@@ -134,7 +132,6 @@ public class EmployeeRepository {
     public List<EmployeeDTO> getAllEmployees() {
         
         LOGGER.debug("Scanning employee table");
-        HashMap<String, Condition> scanFilter = new HashMap<String, Condition>();
         ScanRequest scanRequest = new ScanRequest(EMPLOYEE_TABLE_NAME);// .withScanFilter(scanFilter);
         ScanResult scanResult = client.scan(scanRequest);
         return mapItemsToEmployee(scanResult.getItems());
@@ -143,20 +140,15 @@ public class EmployeeRepository {
     private List<EmployeeDTO> mapItemsToEmployee(List<Map<String, AttributeValue>> items) {
         
         LOGGER.debug("Mapping employee to DTO");
-        ObjectMapper mapper = new ObjectMapper();
         
         List<EmployeeDTO> employees = new ArrayList<EmployeeDTO>();
         
         items.stream().forEach(item -> {
             
-            String id = null, firstName = null, lastName = null, dob = null;
+            String firstName = null, lastName = null, dob = null;
             Map skills = null;
             
-            AttributeValue attrValue = item.get(Constants.EMPLOYEE_ID);
-            if (attrValue != null) {
-                id = attrValue.getS();
-            }
-            attrValue = item.get(Constants.FIRSTNAME);
+            AttributeValue attrValue = item.get(Constants.FIRSTNAME);
             if (attrValue != null) {
                 firstName = attrValue.getS();
             }
